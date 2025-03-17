@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Page Title</title>
+    </head>
+    <body>
+    <div class="container">
+        <div class="timer">
+   <span>
+       <div id='d'>00</div>days</span> 
+    <span>
+       <div id='h'>00</div>hours</span> 
+    <span>
+       <div id='m'>00</div>mins</span> 
+    <span>
+       <div id='s'>00</div>secs</span> 
+         </div>
+     </div>
+        
+        <script language="javascript" type="text/javascript">
+    
+    var comingdate = new Date("Mar 30, 2025 23:59:00");
+
+var d = document.getElementById('d');
+var h = document.getElementById('h');
+var m = document.getElementById('m');
+var s = document.getElementById('s');
+
+var x = setInterval(function(){
+  var now = new Date();
+  var des = comingdate.getTime() - now.getTime();
+  var days = Math.floor(des/(1000 * 60 * 60 * 24));
+  var hours = Math.floor(des%(1000 * 60 * 60 * 24) / (1000 * 60 *60));
+  var mins = Math.floor(des%(1000 * 60 * 60) / (1000 * 60));
+  var secs = Math.floor(des%(1000 * 60) / 1000);
+
+  d.innerHTML = getTrueNumber(days);
+  h.innerHTML = getTrueNumber(hours);
+  m.innerHTML = getTrueNumber(mins);
+  s.innerHTML = getTrueNumber(secs);
+
+  if(des <= 0) clearInterval(x);
+
+},1000);
+
+function getTrueNumber(x) {
+  if (x<10) return '0'+x;
+  else return x;
+}
+    
+</script>
+    </body>
+</html>
