@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <link rel="stylesheet" href="C:\Users\najib shaikh\Webpages\Stopwatch\stopwatch.css">
+</head>
+<body>
+
+    <div class="container">
+        
+        <input type="datetime-local" id="userDate">
+        <button onclick="startCountdown()">Start Countdown</button>
+        <p id="error"></p>
+
+        <div class="timer">
+            <span><div id='d'>00</div></br>Days</span> 
+            <span><div id='h'>00</div></br>Hours</span> 
+            <span><div id='m'>00</div></br>Mins</span> 
+            <span><div id='s'>00</div></br>Secs</span> 
+        </div>
+    </div>
+
+    <script>
+        let countdownInterval;
+
+        function startCountdown() {
+            clearInterval(countdownInterval); // Clear any previous countdown
+
+            let userInput = document.getElementById("userDate").value;
+            let errorElement = document.getElementById("error");
+
+            if (!userInput) {
+                errorElement.textContent = "Please enter a valid date.";
+                return;
+            }
+            
+            errorElement.textContent = ""; // Clear any previous error messages
+
+            let comingDate = new Date(userInput);
+            let d = document.getElementById('d');
+            let h = document.getElementById('h');
+            let m = document.getElementById('m');
+            let s = document.getElementById('s');
+
+            countdownInterval = setInterval(function () {
+                let now = new Date();
+                let timeDiff = comingDate.getTime() - now.getTime();
+
+                if (timeDiff <= 0) {
+                    clearInterval(countdownInterval);
+                    d.innerHTML = h.innerHTML = m.innerHTML = s.innerHTML = "00";
+                    return;
+                }
+
+                let days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let mins = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                let secs = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                d.innerHTML = formatTime(days);
+                h.innerHTML = formatTime(hours);
+                m.innerHTML = formatTime(mins);
+                s.innerHTML = formatTime(secs);
+            }, 1000);
+        }
+
+        function formatTime(num) {
+            return num < 10 ? "0" + num : num;
+        }
+    </script>
+
+</body>
+</html>
